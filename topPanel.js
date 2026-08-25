@@ -72,10 +72,7 @@ async function doDaMagic()
         for (const daLi of [...vuiList.querySelectorAll(".d2l-datalist-item")])
         {
             bumpMyLi(daLi);
-            console.log("bumpies");
         }
-        
-        console.log("okay...");
 
         const newChildObserver = new MutationObserver((mutations) =>
         {

@@ -27,6 +27,11 @@
             "matches": ["https://mycourses.rit.edu/d2l/home/1*", "https://mycourses.rit.edu/d2l/lms/*"],
             "js": ["course.js"],
             "run_at": "document_end"
+        },
+        {
+            "matches": ["https://mycourses.rit.edu/d2l/le/manageCourses/search/*"],
+            "js": ["manageCourses.js"],
+            "run_at": "document_end"
         }
     ]
 }
