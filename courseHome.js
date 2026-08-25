@@ -64,8 +64,14 @@ async function argBargarg()
 
                     const daIframeDocBody = await awaitElementExists(daIframeDoc, "#d2l_body");
 
-                    const deeCoc = await awaitElementExists(daIframeDocBody, ".dco_c");
-                    addElementToColorUpdater(courseName, deeCoc, "backgroundColor");
+                    const deeCoc = await awaitElementExists(daIframeDocBody, ".dco_c", 100, 1000);
+                    if (deeCoc != null)
+                    {
+                        for (const beeCoc of daIframeDocBody.querySelectorAll(".dco_c"))
+                        {
+                            addElementToColorUpdater(courseName, beeCoc, "backgroundColor");
+                        }
+                    }
 
                     const trrrr = await awaitElementExists(daIframeDocBody, "tr", 100, 1000);
                     if (trrrr != null)
