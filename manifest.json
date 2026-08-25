@@ -1,0 +1,32 @@
+{
+    "manifest_version": 3,
+    "name": "My Courses Color Organization",
+    "version": "0.1",
+    "description": "Allows you to assign colors to courses in MyCourses",
+    "permissions": [
+        "storage"
+    ],
+    "content_scripts":
+    [
+        {
+            "matches": ["https://mycourses.rit.edu/d2l/*"],
+            "js": ["common.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://mycourses.rit.edu/d2l/*"],
+            "js": ["topPanel.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://mycourses.rit.edu/d2l/home"],
+            "js": ["home.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://mycourses.rit.edu/d2l/home/1*", "https://mycourses.rit.edu/d2l/lms/*"],
+            "js": ["course.js"],
+            "run_at": "document_end"
+        }
+    ]
+}
