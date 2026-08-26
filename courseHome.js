@@ -73,6 +73,8 @@ async function argBargarg()
                         }
                     }
 
+                    updateCourseElements(courseName);
+
                     const trrrr = await awaitElementExists(daIframeDocBody, "tr", 100, 1000);
                     if (trrrr != null)
                     {
