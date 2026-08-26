@@ -3,7 +3,7 @@ async function argBargarg()
     const titleContainer = document.querySelector(".d2l-navigation-s-title-container");
 
     const daLink = titleContainer.querySelector("a");
-    const courseName = daLink.textContent.trim();
+    const courseName = daLink.textContent.split(" (")[0].trim();
 
     await Promise.allSettled(
         [...document.body.querySelectorAll(".d2l-widget")].map(async (widget) =>

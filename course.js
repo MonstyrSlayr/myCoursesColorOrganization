@@ -4,7 +4,7 @@ async function suckItBaby()
     const navBarHeader = document.querySelector("d2l-labs-navigation-main-header");
 
     const daLink = titleContainer.querySelector("a");
-    const courseName = daLink.textContent.trim();
+    const courseName = daLink.textContent.split(" (")[0].trim(); // don't ask
 
     addElementToColorUpdater(courseName, navBarHeader, "backgroundColor");
     addElementToColorUpdater(courseName, navBarHeader.querySelector("a"), "color");
