@@ -27,7 +27,8 @@
             "matches": ["https://mycourses.rit.edu/d2l/home/1*",
                             "https://mycourses.rit.edu/d2l/lms/*",
                                 "https://mycourses.rit.edu/d2l/le/*",
-                                    "https://mycourses.rit.edu/d2l/le/calendar/1*"],
+                                    "https://mycourses.rit.edu/d2l/le/calendar/1*",
+                                        "https://mycourses.rit.edu/d2l/lp/navbars/1*"],
             "js": ["course.js"],
             "run_at": "document_end"
         },
