@@ -128,7 +128,7 @@ const settings = {};
 
 async function getColors()
 {
-    const daReturnData = (await chrome.storage.local.get(["colorData"]))["colorData"];
+    const daReturnData = (await browser.storage.local.get(["colorData"]))["colorData"] || {};
 
     Object.entries(daReturnData).forEach((daThing) =>
     {
@@ -138,7 +138,7 @@ async function getColors()
 
 async function getSettings()
 {
-    const daReturnData = (await chrome.storage.local.get(["settings"]))["settings"];
+    const daReturnData = (await browser.storage.local.get(["settings"]))["settings"] || {};
 
     // populate settings
     const defaultSettings = {
@@ -283,10 +283,10 @@ function updateCourseElements(courseName)
 
 async function saveColorData()
 {
-    await chrome.storage.local.set({ colorData: colorData });
+    await browser.storage.local.set({ colorData: colorData });
 }
 
 async function saveSettings()
 {
-    await chrome.storage.local.set({ settings: settings });
+    await browser.storage.local.set({ settings: settings });
 }

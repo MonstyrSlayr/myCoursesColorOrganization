@@ -2,12 +2,12 @@ const settings = {};
 
 async function saveSettings()
 {
-    await chrome.storage.local.set({ settings: settings });
+    await browser.storage.local.set({ settings: settings });
 }
 
 async function getSettings()
 {
-    const daReturnData = (await chrome.storage.local.get(["settings"]))["settings"];
+    const daReturnData = (await browser.storage.local.get(["settings"]))["settings"] || {};
 
     // populate settings
     const defaultSettings = {
