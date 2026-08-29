@@ -1,5 +1,7 @@
 async function argBargarg()
 {
+    if (!settings["Apply to Course Widgets"]) return;
+
     const titleContainer = document.querySelector(".d2l-navigation-s-title-container");
 
     const daLink = titleContainer.querySelector("a");

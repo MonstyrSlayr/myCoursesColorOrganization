@@ -1,5 +1,7 @@
 async function applyColorsToEnrollmentCard(enrollmentCard)
 {
+    if (!settings["Apply to Cards"]) return;
+
     const enrollmentCardShadowRoot = await awaitShadowRoot(enrollmentCard);
 
     const d2lCard = await awaitElementExists(enrollmentCardShadowRoot, "d2l-card");

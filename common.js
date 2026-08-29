@@ -124,6 +124,7 @@ function waitForTextContent(element)
 }
 
 const colorData = {};
+const settings = {};
 
 async function getColors()
 {
@@ -135,7 +136,36 @@ async function getColors()
     });
 }
 
+async function getSettings()
+{
+    const daReturnData = (await chrome.storage.local.get(["settings"]))["settings"];
+
+    // populate settings
+    const defaultSettings = {
+        "Apply to Cards": true,
+        "Apply to Course List": true,
+        "Apply to Notifications": true,
+        "Apply to Course Header": true,
+        "Apply to Course Widgets": true,
+    }
+
+    Object.entries(defaultSettings).forEach((daSetting) =>
+    {
+        if (!Object.hasOwn(daReturnData, daSetting[0]))
+        {
+            settings[daSetting[0]] = daSetting[1];
+        }
+        else
+        {
+            settings[daSetting[0]] = daReturnData[daSetting[0]];
+        }
+    });
+
+    saveSettings();
+}
+
 getColors();
+getSettings();
 
 function invertColor(hex, bw)
 {
@@ -254,4 +284,9 @@ function updateCourseElements(courseName)
 async function saveColorData()
 {
     await chrome.storage.local.set({ colorData: colorData });
+}
+
+async function saveSettings()
+{
+    await chrome.storage.local.set({ settings: settings });
 }

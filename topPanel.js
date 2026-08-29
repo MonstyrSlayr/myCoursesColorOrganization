@@ -2,6 +2,8 @@ async function doDaMagic()
 {
     async function courseListShenanigans()
     {
+        if (!settings["Apply to Course List"]) return;
+
         const courseMenu = document.querySelector(".d2l-navigation-s-course-menu");
 
         const navDropDownButton = courseMenu.querySelector("d2l-labs-navigation-dropdown-button-icon");
@@ -47,6 +49,8 @@ async function doDaMagic()
 
     async function notificationsShenanigans()
     {
+        if (!settings["Apply to Notifications"]) return;
+
         const noties = document.querySelectorAll(".d2l-navigation-s-notification");
         const notieMenu = noties[noties.length - 1];
 
@@ -103,6 +107,8 @@ async function doDaMagic()
 
 async function doDaMagicMobile()
 {
+    if (!settings["Apply to Course List"]) return;
+    
     const mobileMenuWhatever = document.querySelector(".d2l-navigation-s-mobile-menu-content");
 
     const courseMenu = await awaitElementExists(mobileMenuWhatever, ".d2l-navigation-s-mobile-menu-course-menu");

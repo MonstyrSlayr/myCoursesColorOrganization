@@ -1,5 +1,7 @@
 async function suckItBaby()
 {
+    if (!settings["Apply to Course Header"]) return;
+
     const titleContainer = document.querySelector(".d2l-navigation-s-title-container");
     const navBarHeader = document.querySelector("d2l-labs-navigation-main-header");
 
