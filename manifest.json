@@ -56,5 +56,17 @@
             "js": ["manageCourses.js"],
             "run_at": "document_end"
         }
-    ]
+    ],
+    "browser_specific_settings":
+    {
+        "gecko":
+        {
+            "id": "mycourses-color-organization@example.com",
+            "strict_min_version": "109.0",
+            "data_collection_permissions":
+            {
+                "required": ["none"]
+            }
+        }
+    }
 }
