@@ -1,8 +1,8 @@
 # MyCourses Color Organization
 
-does the colors
+does the colors on MyCourses
 
-## How to install (Chrome Only)
+## How to install
 
 1. Clone this repository
 1. Go to [chrome://extensions/](chrome://extensions/)
