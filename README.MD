@@ -1,6 +1,8 @@
 # MyCourses Color Organization
 
-does the colors on MyCourses
+Allows you to assign colors to RIT's MyCourses website.
+
+
 
 ## How to install
 
