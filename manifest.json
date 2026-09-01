@@ -1,24 +1,25 @@
 {
     "manifest_version": 3,
     "name": "My Courses Color Organization",
-    "version": "1.0",
-    "description": "Allows you to assign colors to courses in RIT's MyCourses",
-    "permissions": [
+    "version": "1.1",
+    "description": "Allows you to assign colors to courses in RIT's MyCourses website.",
+    "permissions":
+    [
         "storage"
     ],
-    "icons": {
+    "icons":
+    {
         "40": "icons/icon-40.png",
         "80": "icons/icon-80.png",
         "160": "icons/icon-160.png"
     },
-    "action": {
-        "default_icon": {
-            "40": "icons/icon-40.png",
-            "80": "icons/icon-80.png"
-        },
-        "default_popup": "popup/index.html",
-        "default_title": "Settings"
+    "background":
+    {
+        "service_worker": "background.js",
+        "scripts": ["background.js"],
+        "type": "module"
     },
+    "action": {},
     "content_scripts":
     [
         {

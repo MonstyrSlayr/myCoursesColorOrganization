@@ -1,3 +1,8 @@
+*
+{
+    transition: all 0.15s;
+}
+
 body
 {
     min-width: 450px;
@@ -65,4 +70,33 @@ header > img
 {
     padding: 0;
     margin: 0;
+}
+
+#jsonDiv
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#jsonDiv > div
+{
+    color: blue;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#jsonDiv > div:hover
+{
+    cursor: pointer;
+    scale: 105%;
+    text-decoration-line: underline;
+}
+
+#reloadSpoiler
+{
+    font-weight: bolder;
+    display: none;
 }

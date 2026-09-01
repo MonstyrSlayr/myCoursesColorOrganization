@@ -33,6 +33,8 @@ async function getSettings()
     saveSettings();
 }
 
+const reloadSpoiler = document.getElementById("reloadSpoiler");
+
 getSettings().then(() =>
 {
     function createSettingMenuItem(text)
@@ -57,6 +59,7 @@ getSettings().then(() =>
             {
                 settings[text] = checkbox.checked;
                 saveSettings();
+                reloadSpoiler.style.display = "block";
             });
 
             colorPickerMenuItem.appendChild(checkbox);
@@ -70,4 +73,90 @@ getSettings().then(() =>
     daSettingsMenu.appendChild(createSettingMenuItem("Apply to Notifications"));
     daSettingsMenu.appendChild(createSettingMenuItem("Apply to Course Header"));
     daSettingsMenu.appendChild(createSettingMenuItem("Apply to Course Widgets"));
+});
+
+document.getElementById("exportJson").addEventListener("click", () =>
+{
+    browser.storage.local.get(["colorData"]).then((data) =>
+    {
+        const colorData = {};
+        const daReturnData = data["colorData"] || {};
+
+        Object.entries(daReturnData).forEach((daThing) =>
+        {
+            colorData[daThing[0]] = daThing[1];
+        });
+
+        const blob = new Blob([JSON.stringify(colorData)], { type: "application/json" });
+        const blobUrl = URL.createObjectURL(blob);
+        
+        const daA = document.createElement("a");
+        daA.href = blobUrl;
+        daA.download = "myCoursesColorData.json";
+        
+        document.body.appendChild(daA);
+        daA.click();
+        
+        document.body.removeChild(daA);
+        URL.revokeObjectURL(blobUrl);
+    });
+});
+
+document.getElementById("importJson").addEventListener("click", () =>
+{
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.multiple = false;
+    fileInput.accept = ".json";
+        
+    document.body.appendChild(fileInput);
+    fileInput.click();
+
+    fileInput.addEventListener("change", () =>
+    {
+        const daFile = Array.from(fileInput.files)[0];
+        if (!daFile) return;
+
+        // NO VERIFICATION fuck it we ball
+        const reader = new FileReader();
+
+        reader.onload = function(e)
+        {
+            try
+            {
+                const contents = e.target.result;
+                const jsonObject = JSON.parse(contents);
+
+                browser.storage.local.get(["colorData"]).then((data) =>
+                {
+                    // by doing this, colors that aren't in the file will not be overridden
+                    const colorData = {};
+                    const daReturnData = data["colorData"] || {};
+
+                    Object.entries(daReturnData).forEach((daThing) =>
+                    {
+                        colorData[daThing[0]] = daThing[1];
+                    });
+
+                    Object.entries(jsonObject).forEach((daThing) =>
+                    {
+                        colorData[daThing[0]] = daThing[1];
+                    });
+
+                    browser.storage.local.set({ colorData: colorData }).then(() =>
+                    {
+                        reloadSpoiler.style.display = "block";
+                    });
+                });
+            }
+            catch (error)
+            {
+                console.error("oops!", error);
+            }
+        };
+
+        reader.readAsText(daFile);
+    });
+    
+    document.body.removeChild(fileInput);
 });

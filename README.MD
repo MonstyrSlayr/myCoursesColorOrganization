@@ -4,7 +4,7 @@ Allows you to assign colors to RIT's MyCourses website.
 
 ![various colored course cards](img/screenshot0.png)
 
-This extension gives you the ability to customize the colors of courses at [https://mycourses.rit.edu/](https://mycourses.rit.edu). The colors are applied in a multitude of places, which can be configured in the extension's settings.
+This extension gives you the ability to customize the colors of courses at [https://mycourses.rit.edu/](https://mycourses.rit.edu). The colors are applied in a multitude of places, which can be configured in the extension's settings. You can export the colors as a json file to syncronize them across devices.
 
 ## Installing the extension
 
