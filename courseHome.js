@@ -15,6 +15,15 @@ async function argBargarg()
             const widgetHeader = widget.querySelector(".d2l-widget-header");
             addElementToColorUpdater(courseName, widgetHeader, "color");
 
+            const dropdownMenu = widgetHeader.querySelector("d2l-dropdown-context-menu");
+            const dropdownMenuShadowRoot = await awaitShadowRoot(dropdownMenu);
+
+            const daButtonIcon = dropdownMenuShadowRoot.querySelector("d2l-button-icon");
+            const daButtonIconShadowRoot = await awaitShadowRoot(daButtonIcon);
+
+            const dropdownArrow = daButtonIconShadowRoot.querySelector("d2l-icon");
+            addElementToColorUpdater(courseName, dropdownArrow, "tungstenCorundum");
+
             updateCourseElements(courseName);
 
             function getThem(thelememnt)
@@ -103,6 +112,24 @@ async function argBargarg()
                                 getThem(bigBlockShadowRoot);
                             }
                         }
+
+                        for (const dropdownMenuCool of contentPadding.querySelectorAll("d2l-dropdown-context-menu"))
+                        {
+                            const dropdownMenuShadowRootCool = await awaitShadowRoot(dropdownMenuCool);
+
+                            const daButtonIconCool = dropdownMenuShadowRootCool.querySelector("d2l-button-icon");
+                            const daButtonIconShadowRootCool = await awaitShadowRoot(daButtonIconCool);
+
+                            const dropdownArrowCool = daButtonIconShadowRootCool.querySelector("d2l-icon");
+                            addElementToColorUpdater(courseName, dropdownArrowCool, "tungstenCorundum");
+                        }
+
+                        for (const d2lIcon of contentPadding.querySelectorAll("d2l-icon"))
+                        {
+                            addElementToColorUpdater(courseName, d2lIcon, "tungstenCorundum");
+                        }
+
+                        updateCourseElements(courseName);
                     }
                 }
             }
