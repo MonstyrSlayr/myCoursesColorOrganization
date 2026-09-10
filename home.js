@@ -120,7 +120,7 @@ async function applyColorsToPanelChildren(parentTabs, skipContent)
 
 async function addColorsToPanels()
 {
-    const myCourses = await awaitElementExists(document, "d2l-my-courses-v2");
+    const myCourses = await awaitElementExists(document.body, "d2l-my-courses-v2");
     const myCoursesShadowRoot = await awaitShadowRoot(myCourses);
 
     const myCoursesContainer = await awaitElementExists(myCoursesShadowRoot, "d2l-my-courses-container-v2");
@@ -194,14 +194,96 @@ async function colorWorkToDo()
             const listItemContent = genniesAnchor.querySelector("d2l-list-item-content");
             addElementToColorUpdater(courseName, listItemContent.children[0], "color");
             addElementToColorUpdater(courseName, listItemContent.children[1], "tungstenCorundum");
-            
+
             updateCourseElements(courseName);
         })
     );
 }
 
+function getBrowserName()
+{
+    const userAgent = navigator.userAgent;
+
+    if (userAgent.includes("Firefox"))
+    {
+        return "Firefox";
+    }
+    else if (userAgent.includes("Edg"))
+    {
+        return "Edge";
+    }
+    else if (userAgent.includes("Chrome"))
+    {
+        return "Chrome";
+    }
+    else if (userAgent.includes("Safari"))
+    {
+        return "Safari";
+    }
+    return "Unknown";
+}
+
+async function leaveAReviewIfItMatters()
+{
+    if (!settings["Show Review"]) return;
+
+    const daLink = getBrowserName() == "Firefox" ? "https://addons.mozilla.org/en-US/firefox/addon/my-courses-color-organization/" : "https://chromewebstore.google.com/detail/my-courses-color-organiza/ebpcoafnjjigafbnhlgbdihikbomiain";
+    const htmlBlockContent = `
+        <a href="${daLink}" target="_blank"><h2>If you're enjoying MyCourses Color Organization, I would love if you left a review!</h2></a>
+    `;
+
+    const hometown = document.body.querySelector(".homepage-col-8");
+
+    const reviewDiv = document.createElement("div");
+    reviewDiv.role = "region";
+    reviewDiv.classList.add("d2l-widget");
+    reviewDiv.classList.add("d2l-tile");
+    reviewDiv.classList.add("d2l-widget-padding-full");
+    reviewDiv.classList.add("d2l-custom-widget");
+    hometown.insertBefore(reviewDiv, hometown.children[1]);
+
+        const reviewExpiCola = document.createElement("d2l-expand-collapse-content");
+        reviewExpiCola.setAttribute("expanded", "");
+        reviewExpiCola.classList.add("d2l-widget-content");
+        reviewDiv.appendChild(reviewExpiCola);
+
+            const reviewContentPadding = document.createElement("div");
+            reviewContentPadding.classList.add("d2l-widget-content-padding");
+            reviewExpiCola.appendChild(reviewContentPadding);
+
+                const randomDiv = document.createElement("div");
+                randomDiv.style.display = "flex";
+                randomDiv.style.flexDirection = "row";
+                randomDiv.style.justifyContent = "space-between";
+                randomDiv.style.alignItems = "start";
+                reviewContentPadding.appendChild(randomDiv);
+
+                    const reviewHtmlBlock = document.createElement("d2l-html-block");
+                    reviewHtmlBlock.setAttribute("html", htmlBlockContent);
+                    randomDiv.appendChild(reviewHtmlBlock);
+
+                    const daButton = document.createElement("a");
+                    daButton.style.aspectRatio = "1 / 1";
+                    daButton.classList.add("d2l-imagelink");
+                    daButton.href = "javascript:void(0);";
+                    daButton.role = "button";
+                    randomDiv.appendChild(daButton);
+
+                        const daButtonIcon = document.createElement("d2l-icon");
+                        daButtonIcon.setAttribute("icon", "tier1:close-small");
+                        daButton.appendChild(daButtonIcon);
+                    
+                    daButton.addEventListener("click", () =>
+                    {
+                        settings["Show Review"] = false;
+                        reviewDiv.style.display = "none";
+                        saveSettings();
+                    });
+}
+
 Promise.allSettled(
 [
     addColorsToPanels(),
-    colorWorkToDo()
+    colorWorkToDo(),
+    leaveAReviewIfItMatters()
 ]);

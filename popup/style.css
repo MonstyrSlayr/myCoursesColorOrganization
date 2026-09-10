@@ -8,10 +8,15 @@ body
     min-width: 450px;
 }
 
-body > *
+body > *, a > *
 {
     margin: 8px;
     padding: 0;
+}
+
+a
+{
+    width: 100%;
 }
 
 header

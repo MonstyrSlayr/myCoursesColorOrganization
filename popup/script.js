@@ -16,7 +16,8 @@ async function getSettings()
         "Apply to Notifications": true,
         "Apply to Course Header": true,
         "Apply to Course Widgets": true,
-        "Apply to Assignments": true
+        "Apply to Assignments": true,
+        "Show Review": true
     }
 
     Object.entries(defaultSettings).forEach((daSetting) =>
@@ -162,3 +163,30 @@ document.getElementById("importJson").addEventListener("click", () =>
     
     document.body.removeChild(fileInput);
 });
+
+function getBrowserName()
+{
+    const userAgent = navigator.userAgent;
+
+    if (userAgent.includes("Firefox"))
+    {
+        return "Firefox";
+    }
+    else if (userAgent.includes("Edg"))
+    {
+        return "Edge";
+    }
+    else if (userAgent.includes("Chrome"))
+    {
+        return "Chrome";
+    }
+    else if (userAgent.includes("Safari"))
+    {
+        return "Safari";
+    }
+    return "Unknown";
+}
+
+const reviewLink = document.getElementById("reviewLink");
+const daLink = getBrowserName() == "Firefox" ? "https://addons.mozilla.org/en-US/firefox/addon/my-courses-color-organization/" : "https://chromewebstore.google.com/detail/my-courses-color-organiza/ebpcoafnjjigafbnhlgbdihikbomiain";
+reviewLink.href = daLink;

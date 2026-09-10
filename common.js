@@ -186,7 +186,8 @@ async function getSettings()
         "Apply to Notifications": true,
         "Apply to Course Header": true,
         "Apply to Course Widgets": true,
-        "Apply to Assignments": true
+        "Apply to Assignments": true,
+        "Show Review": true
     }
 
     Object.entries(defaultSettings).forEach((daSetting) =>
