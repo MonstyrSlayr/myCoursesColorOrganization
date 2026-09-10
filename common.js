@@ -1,7 +1,7 @@
 const debugAwait = false;
 
 // TODO: rework these do they use observers instead of polling, if possible
-async function awaitElementExists(parent, query, pollInterval = 100, timeout = null)
+async function awaitElementExists(parent, query, pollInterval = 100, timeout = null, skeletonCheck = false)
 {
     return new Promise((resolve, reject) =>
     {
@@ -13,8 +13,11 @@ async function awaitElementExists(parent, query, pollInterval = 100, timeout = n
 
             if (d2lTabPanel != null && d2lTabPanel != undefined)
             {
-                clearInterval(daInterval);
-                resolve(d2lTabPanel);
+                if ((!skeletonCheck) || (skeletonCheck && !d2lTabPanel.hasAttribute("skeleton")))
+                {
+                    clearInterval(daInterval);
+                    resolve(d2lTabPanel);
+                }
             }
             else if (debugAwait)
             {
@@ -183,6 +186,7 @@ async function getSettings()
         "Apply to Notifications": true,
         "Apply to Course Header": true,
         "Apply to Course Widgets": true,
+        "Apply to Assignments": true
     }
 
     Object.entries(defaultSettings).forEach((daSetting) =>
@@ -406,6 +410,8 @@ class ColorUpdater
 
         for (const el of this.elements)
         {
+            if (el == null || el == undefined) continue;
+
             switch (this.style)
             {
                 default:

@@ -15,17 +15,26 @@ async function applyColorsToEnrollmentCard(enrollmentCard)
     addElementToColorUpdater(courseName, courseMeta, "tungstenCorundum");
     updateCourseElements(courseName);
 
-    const daFooterLink = await awaitElementExists(d2lCard, "d2l-card-footer-link", 100, 1000);
-    if (daFooterLink != null)
+    try
     {
-        const daFooterLinkShadowRoot = await awaitShadowRoot(daFooterLink);
+        const daFooterLink = await awaitElementExists(d2lCard, "d2l-card-footer-link", 100, 1000);
+        if (daFooterLink != null && daFooterLink != undefined)
+        {
+            const daFooterLinkShadowRoot = await awaitShadowRoot(daFooterLink);
 
-        const countBadgeIcon = await awaitElementExists(daFooterLinkShadowRoot, "d2l-count-badge-icon");
-        const countBadgeIconShadowRoot = await awaitShadowRoot(countBadgeIcon);
+            const countBadgeIcon = await awaitElementExists(daFooterLinkShadowRoot, "d2l-count-badge-icon");
+            const countBadgeIconShadowRoot = await awaitShadowRoot(countBadgeIcon);
 
-        const daIcon = await awaitElementExists(countBadgeIconShadowRoot, "d2l-icon");
-        addElementToColorUpdater(courseName, daIcon, "tungstenCorundum");
+            const daIcon = await awaitElementExists(countBadgeIconShadowRoot, "d2l-icon");
+            addElementToColorUpdater(courseName, daIcon, "tungstenCorundum");
+        }
     }
+    catch (error)
+    {
+        console.error("yo this is the only way anything is going to work");
+    }
+
+    updateCourseElements(courseName);
 
     const dropdownMore = await awaitElementExists(d2lCard, "d2l-dropdown-more");
     const dropdownMenu = await awaitElementExists(dropdownMore, "d2l-dropdown-menu");
@@ -151,4 +160,48 @@ async function addColorsToPanels()
     });
 }
 
-addColorsToPanels();
+async function colorWorkToDo()
+{
+    if (!settings["Apply to Assignments"]) return;
+
+    const workToDo = await awaitElementExists(document.body, "d2l-w2d-work-to-do");
+    const workToDoShadowRoot = await awaitShadowRoot(workToDo);
+
+    const daCollections = await awaitElementExists(workToDoShadowRoot, "d2l-w2d-collections");
+    const daCollectionsShadowRoot = await awaitShadowRoot(daCollections);
+
+    const daList = await awaitElementExists(daCollectionsShadowRoot, "d2l-w2d-list", undefined, undefined, true);
+    const daListShadowRoot = await awaitShadowRoot(daList);
+
+    const daListReal = await awaitElementExists(daListShadowRoot, "d2l-list");
+
+    await Promise.allSettled(
+        [...daListReal.children].map(async (litem) =>
+        {
+            const lagowRoog = await awaitShadowRoot(litem);
+
+            const gennie = await awaitElementExists(lagowRoog, "d2l-list-item-generic-layout");
+            const genniesAnchor = await awaitElementExists(gennie, "a");
+
+            const attrList = await awaitElementExists(genniesAnchor, "d2l-w2d-attribute-list");
+            const courseName = attrList.querySelectorAll("span")[1].textContent;
+
+            addElementToColorUpdater(courseName, litem, "backgroundColor");
+            
+            const activityIcon = genniesAnchor.querySelector("d2l-activity-icon");
+            addElementToColorUpdater(courseName, activityIcon, "tungstenCorundum");
+
+            const listItemContent = genniesAnchor.querySelector("d2l-list-item-content");
+            addElementToColorUpdater(courseName, listItemContent.children[0], "color");
+            addElementToColorUpdater(courseName, listItemContent.children[1], "tungstenCorundum");
+            
+            updateCourseElements(courseName);
+        })
+    );
+}
+
+Promise.allSettled(
+[
+    addColorsToPanels(),
+    colorWorkToDo()
+]);

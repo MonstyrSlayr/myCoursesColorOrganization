@@ -16,6 +16,7 @@ async function getSettings()
         "Apply to Notifications": true,
         "Apply to Course Header": true,
         "Apply to Course Widgets": true,
+        "Apply to Assignments": true
     }
 
     Object.entries(defaultSettings).forEach((daSetting) =>
@@ -71,6 +72,7 @@ getSettings().then(() =>
     daSettingsMenu.appendChild(createSettingMenuItem("Apply to Cards"));
     daSettingsMenu.appendChild(createSettingMenuItem("Apply to Course List"));
     daSettingsMenu.appendChild(createSettingMenuItem("Apply to Notifications"));
+    daSettingsMenu.appendChild(createSettingMenuItem("Apply to Assignments"));
     daSettingsMenu.appendChild(createSettingMenuItem("Apply to Course Header"));
     daSettingsMenu.appendChild(createSettingMenuItem("Apply to Course Widgets"));
 });
