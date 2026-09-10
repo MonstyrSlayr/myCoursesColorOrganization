@@ -17,25 +17,103 @@ async function argBargarg()
 
             updateCourseElements(courseName);
 
-            async function doHtmlBlocks()
+            function getThem(thelememnt)
             {
                 const textSelector = "p, h1, strong, d2l-w2d-work-to-do, .d2l-textblock, div";
-
-                for (const textie of widget.querySelectorAll(textSelector))
+                
+                for (const textie of thelememnt.querySelectorAll(textSelector))
                 {
                     addElementToColorUpdater(courseName, textie, "color");
                 }
 
+                for (const anchor of thelememnt.querySelectorAll("a"))
+                {
+                    addElementToColorUpdater(courseName, anchor, "interactiveAccent");
+                }
+
+                updateCourseElements(courseName);
+            }
+            
+            getThem(widget);
+
+            async function doQuickEvals()
+            {
+                const quickEval = await awaitElementExists(widget, "d2l-quick-eval-widget", 100, 1001);
+
+                if (quickEval != null)
+                {
+                    for (const bigBlock of widget.querySelectorAll("d2l-quick-eval-widget"))
+                    {
+                        const bigBlockShadowRoot = await awaitShadowRoot(bigBlock);
+                        await awaitElementExists(bigBlockShadowRoot, "d2l-link");
+
+                        getThem(bigBlockShadowRoot);
+
+                        await awaitElementExists(bigBlockShadowRoot, "d2l-work-to-do-activity-list-item-basic");
+                        for (const litem of bigBlockShadowRoot.querySelectorAll("d2l-work-to-do-activity-list-item-basic"))
+                        {
+                            const lagowRoog = await awaitShadowRoot(litem);
+
+                            const gennie = await awaitElementExists(lagowRoog, "d2l-list-item-generic-layout");
+                            const genniesAnchor = await awaitElementExists(gennie, "a");
+                            
+                            const thisThing = await awaitElementExists(genniesAnchor, ".d2l-activity-name-container");
+                            addElementToColorUpdater(courseName, thisThing, "interactiveAccent");
+
+                            const dateThing = await awaitElementExists(genniesAnchor, "d2l-activity-date");
+                            addElementToColorUpdater(courseName, dateThing, "tungstenCorundum");
+
+                            const submissionIcon = await awaitElementExists(genniesAnchor, "d2l-quick-eval-widget-submission-icon");
+                            const submissionIconShadowRoot = await awaitShadowRoot(submissionIcon);
+                            const actualIcon = await awaitElementExists(submissionIconShadowRoot, "d2l-icon");
+                            addElementToColorUpdater(courseName, actualIcon, "tungstenCorundum");
+                        }
+
+                        for (const d2lLink of bigBlockShadowRoot.querySelectorAll("d2l-link"))
+                        {
+                            const linkShadowRoot = await awaitShadowRoot(d2lLink);
+                            addElementToColorUpdater(courseName, linkShadowRoot.querySelector("a"), "interactiveAccent");
+                        }
+
+                        updateCourseElements(courseName);
+                    }
+                }
+            }
+
+            async function doContentPadding()
+            {
+                const contentPaddingReal = await awaitElementExists(widget, ".d2l-widget-content-padding", 100, 1000);
+
+                if (contentPaddingReal != null)
+                {
+                    for (const contentPadding of widget.querySelectorAll(".d2l-widget-content-padding"))
+                    {
+                        await awaitElementNotExists(contentPadding, ".d2l-loading");
+
+                        getThem(contentPadding);
+
+                        const widgetContentHtmlBlock = await awaitElementExists(contentPadding, "d2l-html-block", 100, 1000);
+
+                        if (widgetContentHtmlBlock != null)
+                        {
+                            for (const bigBlock of contentPadding.querySelectorAll("d2l-html-block"))
+                            {
+                                const bigBlockShadowRoot = await awaitShadowRoot(bigBlock);
+
+                                getThem(bigBlockShadowRoot);
+                            }
+                        }
+                    }
+                }
+            }
+
+            async function doHtmlBlocks()
+            {
                 const widgetHtmlBlock = await awaitElementExists(widget, "d2l-html-block", 100, 1000);
 
                 if (widgetHtmlBlock != null)
                 {
-                    for (const textie of widgetHtmlBlock.querySelectorAll(textSelector))
-                    {
-                        addElementToColorUpdater(courseName, textie, "color");
-                    }
-
-                    updateCourseElements(courseName);
+                    getThem(widgetHtmlBlock);
 
                     const widgetHtmlBlockShadowRoot = await awaitShadowRoot(widgetHtmlBlock);
                     for (const textie of widgetHtmlBlockShadowRoot.querySelectorAll(textSelector))
@@ -43,16 +121,21 @@ async function argBargarg()
                         addElementToColorUpdater(courseName, textie, "color");
                     }
 
+                    for (const anchor of widgetHtmlBlockShadowRoot.querySelectorAll("a"))
+                    {
+                        addElementToColorUpdater(courseName, anchor, "interactiveAccent");
+                    }
+
                     updateCourseElements(courseName);
                 }
+            }
 
+            async function doInstructorBlock()
+            {
                 const widgetInstructorBlock = await awaitElementExists(widget, "#instructors-container > div", 100, 1000);
                 if (widgetInstructorBlock != null)
                 {
-                    for (const textie of widgetInstructorBlock.querySelectorAll(textSelector))
-                    {
-                        addElementToColorUpdater(courseName, textie, "color");
-                    }
+                    getThem(widgetInstructorBlock);
                 }
             }
 
@@ -72,6 +155,51 @@ async function argBargarg()
                         for (const beeCoc of daIframeDocBody.querySelectorAll(".dco_c"))
                         {
                             addElementToColorUpdater(courseName, beeCoc, "backgroundColor");
+
+                            const myListieHuh = await awaitElementExists(beeCoc, "li", 100, 1000);
+                            if (myListieHuh != null)
+                            {
+                                for (const myListie of beeCoc.querySelectorAll("li"))
+                                {
+                                    const daAnchor = myListie.querySelector("a");
+                                    addElementToColorUpdater(courseName, daAnchor, "interactiveAccent");
+
+                                    for (const daImgThatShouldReallyBeAnSvg of daAnchor.querySelectorAll("img"))
+                                    {
+                                        if (daImgThatShouldReallyBeAnSvg.src.endsWith(".svg"))
+                                        {
+                                            const yeahWeDidIt = await imgToSvg(daImgThatShouldReallyBeAnSvg);
+
+                                            if (yeahWeDidIt)
+                                            {
+                                                addElementToColorUpdater(courseName, yeahWeDidIt, "tungstenCorundum");
+
+                                                updateCourseElements(courseName);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            updateCourseElements(courseName);
+
+                            const suttyButtyHuh = await awaitElementExists(beeCoc, "d2l-button-subtle", 100, 1000);
+                            if (suttyButtyHuh != null)
+                            {
+                                for (const suttyButty of daIframeDocBody.querySelectorAll("d2l-button-subtle"))
+                                {
+                                    const suttyButtyShadowRoot = await awaitShadowRoot(suttyButty);
+                                    const daButton = suttyButtyShadowRoot.querySelector("button");
+
+                                    const daSpan = daButton.querySelector(".d2l-button-subtle-content");
+                                    addElementToColorUpdater(courseName, daSpan, "interactiveAccent");
+
+                                    const daIcon = daButton.querySelector(".property-icon");
+                                    addElementToColorUpdater(courseName, daIcon, "interactiveAccent");
+                                }
+                            }
+
+                            updateCourseElements(courseName);
                         }
                     }
 
@@ -92,7 +220,10 @@ async function argBargarg()
 
             await Promise.allSettled(
             [
+                doQuickEvals(),
+                doContentPadding(),
                 doHtmlBlocks(),
+                doInstructorBlock(),
                 doIframes()
             ]);
         })

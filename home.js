@@ -6,12 +6,26 @@ async function applyColorsToEnrollmentCard(enrollmentCard)
 
     const d2lCard = await awaitElementExists(enrollmentCardShadowRoot, "d2l-card");
     const courseNameElement = d2lCard.querySelector(".d2l-organization-name");
+    const courseMeta =  await awaitElementExists(d2lCard, "d2l-card-content-meta");
 
     const courseName = (await waitForTextContent(courseNameElement)).trim();
 
     addElementToColorUpdater(courseName, d2lCard, "backgroundColor");
     addElementToColorUpdater(courseName, courseNameElement, "color");
+    addElementToColorUpdater(courseName, courseMeta, "tungstenCorundum");
     updateCourseElements(courseName);
+
+    const daFooterLink = await awaitElementExists(d2lCard, "d2l-card-footer-link", 100, 1000);
+    if (daFooterLink != null)
+    {
+        const daFooterLinkShadowRoot = await awaitShadowRoot(daFooterLink);
+
+        const countBadgeIcon = await awaitElementExists(daFooterLinkShadowRoot, "d2l-count-badge-icon");
+        const countBadgeIconShadowRoot = await awaitShadowRoot(countBadgeIcon);
+
+        const daIcon = await awaitElementExists(countBadgeIconShadowRoot, "d2l-icon");
+        addElementToColorUpdater(courseName, daIcon, "tungstenCorundum");
+    }
 
     const dropdownMore = await awaitElementExists(d2lCard, "d2l-dropdown-more");
     const dropdownMenu = await awaitElementExists(dropdownMore, "d2l-dropdown-menu");

@@ -3,6 +3,10 @@
     "name": "My Courses Color Organization",
     "version": "1.1",
     "description": "Allows you to assign colors to courses in RIT's MyCourses website.",
+    "host_permissions": [
+        "https://mycourses.rit.edu/d2l/*",
+        "https://s.brightspace.com/*" 
+    ],
     "permissions":
     [
         "storage"
