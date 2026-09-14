@@ -181,7 +181,16 @@ async function colorWorkToDo()
             const lagowRoog = await awaitShadowRoot(litem);
 
             const gennie = await awaitElementExists(lagowRoog, "d2l-list-item-generic-layout");
-            const genniesAnchor = await awaitElementExists(gennie, "a");
+            let genniesAnchor;
+
+            try
+            {
+                genniesAnchor = await awaitElementExists(gennie, "a", 100, 100);
+            }
+            catch (error)
+            {
+                genniesAnchor = gennie;
+            }
 
             const attrList = await awaitElementExists(genniesAnchor, "d2l-w2d-attribute-list");
             const courseName = attrList.querySelectorAll("span")[1].textContent;
