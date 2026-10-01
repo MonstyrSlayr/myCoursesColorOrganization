@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "My Courses Color Organization",
-    "version": "1.21.1",
+    "version": "1.3",
     "description": "Allows you to assign colors to courses in RIT's MyCourses website.",
     "host_permissions": [
         "https://mycourses.rit.edu/d2l/*",
@@ -64,6 +64,11 @@
         {
             "matches": ["https://mycourses.rit.edu/d2l/le/worktodo/view"],
             "js": ["worktodo.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://mycourses.rit.edu/d2l/folio/main/Index/*"],
+            "js": ["folio.js"],
             "run_at": "document_end"
         }
     ],

@@ -17,6 +17,7 @@ async function getSettings()
         "Apply to Course Header": true,
         "Apply to Course Widgets": true,
         "Apply to Assignments": true,
+        "Apply to Portfolio Cards": true,
         "Show Review": true
     }
 
@@ -76,6 +77,7 @@ getSettings().then(() =>
     daSettingsMenu.appendChild(createSettingMenuItem("Apply to Assignments"));
     daSettingsMenu.appendChild(createSettingMenuItem("Apply to Course Header"));
     daSettingsMenu.appendChild(createSettingMenuItem("Apply to Course Widgets"));
+    daSettingsMenu.appendChild(createSettingMenuItem("Apply to Portfolio Cards"));
 });
 
 document.getElementById("exportJson").addEventListener("click", () =>

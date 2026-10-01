@@ -13,7 +13,8 @@ async function awaitElementExists(parent, query, pollInterval = 100, timeout = n
 
             if (d2lTabPanel != null && d2lTabPanel != undefined)
             {
-                if ((!skeletonCheck) || (skeletonCheck && !d2lTabPanel.hasAttribute("skeleton")))
+                if ((!skeletonCheck) ||
+                (skeletonCheck && !d2lTabPanel.hasAttribute("skeleton") && !d2lTabPanel.hasAttribute("loading")))
                 {
                     clearInterval(daInterval);
                     resolve(d2lTabPanel);
@@ -187,6 +188,7 @@ async function getSettings()
         "Apply to Course Header": true,
         "Apply to Course Widgets": true,
         "Apply to Assignments": true,
+        "Apply to Portfolio Cards": true,
         "Show Review": true
     }
 

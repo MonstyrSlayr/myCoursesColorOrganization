@@ -170,41 +170,47 @@ async function colorWorkToDo()
     const daCollections = await awaitElementExists(workToDoShadowRoot, "d2l-w2d-collections");
     const daCollectionsShadowRoot = await awaitShadowRoot(daCollections);
 
-    const daList = await awaitElementExists(daCollectionsShadowRoot, "d2l-w2d-list", undefined, undefined, true);
-    const daListShadowRoot = await awaitShadowRoot(daList);
-
-    const daListReal = await awaitElementExists(daListShadowRoot, "d2l-list");
+    await awaitElementExists(daCollectionsShadowRoot, "d2l-w2d-list", undefined, undefined, true);
 
     await Promise.allSettled(
-        [...daListReal.children].map(async (litem) =>
+        [...daCollectionsShadowRoot.querySelectorAll("d2l-w2d-list")].map(async (daList) =>
         {
-            const lagowRoog = await awaitShadowRoot(litem);
+            const daListShadowRoot = await awaitShadowRoot(daList);
 
-            const gennie = await awaitElementExists(lagowRoog, "d2l-list-item-generic-layout");
-            let genniesAnchor;
+            const daListReal = await awaitElementExists(daListShadowRoot, "d2l-list");
 
-            try
-            {
-                genniesAnchor = await awaitElementExists(gennie, "a", 100, 100);
-            }
-            catch (error)
-            {
-                genniesAnchor = gennie;
-            }
+            await Promise.allSettled(
+                [...daListReal.children].map(async (litem) =>
+                {
+                    const lagowRoog = await awaitShadowRoot(litem);
 
-            const attrList = await awaitElementExists(genniesAnchor, "d2l-w2d-attribute-list");
-            const courseName = attrList.querySelectorAll("span")[1].textContent;
+                    const gennie = await awaitElementExists(lagowRoog, "d2l-list-item-generic-layout");
+                    let genniesAnchor;
 
-            addElementToColorUpdater(courseName, litem, "backgroundColor");
-            
-            const activityIcon = genniesAnchor.querySelector("d2l-activity-icon");
-            addElementToColorUpdater(courseName, activityIcon, "tungstenCorundum");
+                    try
+                    {
+                        genniesAnchor = await awaitElementExists(gennie, "a", 100, 100);
+                    }
+                    catch (error)
+                    {
+                        genniesAnchor = gennie;
+                    }
 
-            const listItemContent = genniesAnchor.querySelector("d2l-list-item-content");
-            addElementToColorUpdater(courseName, listItemContent.children[0], "color");
-            addElementToColorUpdater(courseName, listItemContent.children[1], "tungstenCorundum");
+                    const attrList = await awaitElementExists(genniesAnchor, "d2l-w2d-attribute-list");
+                    const courseName = attrList.querySelectorAll("span")[1].textContent;
 
-            updateCourseElements(courseName);
+                    addElementToColorUpdater(courseName, litem, "backgroundColor");
+                    
+                    const activityIcon = genniesAnchor.querySelector("d2l-activity-icon");
+                    addElementToColorUpdater(courseName, activityIcon, "tungstenCorundum");
+
+                    const listItemContent = genniesAnchor.querySelector("d2l-list-item-content");
+                    addElementToColorUpdater(courseName, listItemContent.children[0], "color");
+                    addElementToColorUpdater(courseName, listItemContent.children[1], "tungstenCorundum");
+
+                    updateCourseElements(courseName);
+                })
+            );
         })
     );
 }
